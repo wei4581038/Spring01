@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd ">
+		
+		<!-- 配置需要spring容器来管理和维护的对象  注意这个class不是接口,而是接口的实现类-->
+		<bean id="userDao" class="com.spring.ioc.UserDaoBeanImpl" />
+		
+		<bean id="UserService" class="com.spring.ioc.UserServiceImpl">
+			<!-- 通过name使用构造器注入依赖对象-->
+			<constructor-arg name="bean" ref="userDao"/> 
+			<!-- 通过index使用构造器注入依赖对象  index="0" 也就是说调用带一个参数的构造器 如果上面的构造器不注释的话,那么应该是1-->
+			<constructor-arg index="1" value="22"/>
+			<!-- 通过类型使用构造器注入依赖对象 -->
+			<constructor-arg type="java.lang.String" value="STring"/>
+		</bean>
+		
+		<bean id="UserService1" class="com.spring.ioc.UserServiceImpl">
+			<!-- 
+				name表示当前这个类中需要注入的属性名称 bean是UserServiceImpl类的属性名称 
+				ref:应用当前Spring容器中创建的对象对应的key /id
+			-->
+			<property name="bean" ref="userDao" />
+		</bean>
+</beans>
